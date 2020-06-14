@@ -7,10 +7,15 @@ import org.junit.Test;
 public class StringCalculatorTest {
 
     StringCalculator stringCalculator;
+    String str;
+    long actual, expected;
 
     @Before
     public void getNewInstance() {
         stringCalculator = new StringCalculator();
+        str = "";
+        expected = 0;
+        actual = 0;
     }
 
     //  Feature - 1
@@ -18,9 +23,9 @@ public class StringCalculatorTest {
     public void AddNo() {
 
         //  Empty String
-        String str = "";
-        long expected = 0;
-        long actual = stringCalculator.Add(str);
+        str = "";
+        expected = 0;
+        actual = stringCalculator.Add(str);
         assertEquals(expected, actual);
 
         // Single String
@@ -45,17 +50,16 @@ public class StringCalculatorTest {
     //  Feature - 2
     @Test(expected = InputException.class)
     public void unknownAmountOfNumber() {
-        String str = "1,2,3,4";
+        str = "1,2,3,4";
         stringCalculator.Add(str);
-
     }
 
     //  Feature - 3
     @Test(expected = InputException.class)
     public void shouldHandleNewLineDelimiters() {
-        String str = "1\n2,3";
-        long expected = 6;
-        long actual = stringCalculator.Add(str);
+        str = "1\n2,3";
+        expected = 6;
+        actual = stringCalculator.Add(str);
         assertEquals(expected, actual);
 
         str = "1,\n2,3";
@@ -66,9 +70,9 @@ public class StringCalculatorTest {
     @Test
     public void shouldSupportDifferentDelimiters() {
         //  1
-        String str = "//;\n1;2";
-        long expected = 3;
-        long actual = stringCalculator.Add(str);
+        str = "//;\n1;2";
+        expected = 3;
+        actual = stringCalculator.Add(str);
         assertEquals(expected, actual);
 
         //  2
@@ -89,5 +93,26 @@ public class StringCalculatorTest {
         actual = stringCalculator.Add(str);
         assertEquals(expected, actual);
 
+    }
+
+    //  Feature - 9
+    @Test
+    public void shouldIgnoreBiggerNumbers() {
+        //  No within range
+        str = "2,1000";
+        expected = 1002;
+        actual = stringCalculator.Add(str);
+        assertEquals(expected, actual);
+
+        //  No out-of-range
+        str = "2,1001";
+        expected = 2;
+        actual = stringCalculator.Add(str);
+        assertEquals(expected, actual);
+
+        str = "5,1050,1000";
+        expected = 1005;
+        actual = stringCalculator.Add(str);
+        assertEquals(expected, actual);
     }
 }

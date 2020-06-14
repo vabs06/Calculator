@@ -52,9 +52,7 @@ public class StringCalculator {
                 numbers = numbers.replace(d, delimit);
             }
 
-
             input = numbers.split(delimit);
-
 
         } else {
             numbers = numbers.replace(newLine, delimit);
@@ -68,14 +66,17 @@ public class StringCalculator {
 
         for(String s: input) {
             //  add a check any element is negative or not.
-            result += Integer.parseInt(s);
+
+            int number = Integer.parseInt(s);
+            if(number < 1001 && number > -1)
+                result += number;
         }
 
         return result;
     }
 
     public static void main(String[] args) {
-        StringCalculator stringCalculator = new StringCalculator();
-//        stringCalculator.Add("")
+//        StringCalculator stringCalculator = new StringCalculator();
+////        stringCalculator.Add("")
     }
 }
