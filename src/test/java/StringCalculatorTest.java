@@ -98,6 +98,11 @@ public class StringCalculatorTest {
         actual = stringCalculator.Add(str);
         assertEquals(expected, actual);
 
+        str = "//[$$][##]\n10$$1##3";
+        expected = 12;
+        actual = stringCalculator.Add(str);
+        assertNotEquals(expected, actual);
+
     }
 
     //  Feature - 9
