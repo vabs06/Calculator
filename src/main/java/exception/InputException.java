@@ -4,8 +4,8 @@ import java.util.InputMismatchException;
 
 public class InputException extends InputMismatchException {
 
-    public InputException(String str) {
-        super(str);
+    public InputException(String message) {
+        super(message);
     }
 
 }

@@ -1,11 +1,22 @@
 import exception.InputException;
+import exception.NegativeNumberException;
 
-import java.util.Collections;
-import java.util.InputMismatchException;
+import java.util.ArrayList;
+
 
 public class StringCalculator {
     public static final String delimit = ",";
     public static final String newLine = "\n";
+    public static final String INVALID = "INVALID Input.";
+    public static final String UN_AMOUNT = "Unknown Amount of Numbers.";
+    public static final String NEG_NA = "Negatives not allowed.";
+
+    ArrayList<Integer> negativeList;
+
+    public StringCalculator() {
+        negativeList = new ArrayList<>();
+    }
+
 
     public int Add(String numbers) {
         int result = 0;
@@ -14,13 +25,18 @@ public class StringCalculator {
             return 0;
         }
 
-        if(numbers.length() == 1) {
+        if (numbers.length() == 1 && Character.getNumericValue(numbers.charAt(0)) < 0) {
+            throw new NegativeNumberException(NEG_NA);
+        }
+
+        if (numbers.length() == 1) {
             return Character.getNumericValue(numbers.charAt(0));
         }
 
         int idx = numbers.indexOf(newLine);
-        if(idx > 0 && numbers.charAt(idx - 1) == ',')
-            throw new InputException("INVALID Input.");
+        if (idx > 0 && numbers.charAt(idx - 1) == ',') {
+            throw new InputException(INVALID);
+        }
 
         String []delimiter;
         String[] input;
@@ -61,13 +77,22 @@ public class StringCalculator {
 
 
         if(input.length > 3){
-            throw new InputException("Unknown Amount of Numbers.");
+            throw new InputException(UN_AMOUNT);
         }
 
         for(String s: input) {
-            //  add a check any element is negative or not.
-
             int number = Integer.parseInt(s);
+
+            if (number < 0) {
+                for (String value : input) {
+                    int no = Integer.parseInt(value);
+                    if (no < 0)
+                        negativeList.add(no);
+                }
+                String custom = NEG_NA + " " + negativeList.toString();
+                throw new NegativeNumberException(custom);
+            }
+
             if(number < 1001 && number > -1)
                 result += number;
         }
@@ -76,7 +101,6 @@ public class StringCalculator {
     }
 
     public static void main(String[] args) {
-//        StringCalculator stringCalculator = new StringCalculator();
-////        stringCalculator.Add("")
+
     }
 }

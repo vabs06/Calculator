@@ -1,14 +1,15 @@
 import static org.junit.Assert.*;
 
 import exception.InputException;
+import exception.NegativeNumberException;
 import org.junit.Before;
 import org.junit.Test;
 
 public class StringCalculatorTest {
 
-    StringCalculator stringCalculator;
-    String str;
-    long actual, expected;
+    private StringCalculator stringCalculator;
+    private String str;
+    private long actual, expected;
 
     @Before
     public void getNewInstance() {
@@ -114,5 +115,33 @@ public class StringCalculatorTest {
         expected = 1005;
         actual = stringCalculator.Add(str);
         assertEquals(expected, actual);
+    }
+
+    // Feature - 5, 6
+    @Test
+    public void shouldHandleNegativeNumbers() {
+        String expect = "";
+        //  1
+        str = "-1";
+        try {
+            stringCalculator.Add(str);
+            fail();
+        } catch ( NegativeNumberException nne) {
+            expect = StringCalculator.NEG_NA + " " + stringCalculator.negativeList.toString();
+            assertEquals(expect, nne.getMessage());
+            System.out.println(expect);
+        }
+
+        //  2
+        str = "-1,2,-3";
+        try {
+            stringCalculator.Add(str);
+            fail();
+        } catch ( NegativeNumberException nne) {
+            expect = StringCalculator.NEG_NA + " " + stringCalculator.negativeList.toString();
+            assertEquals(expect, nne.getMessage());
+            System.out.println(expect);
+        }
+
     }
 }
