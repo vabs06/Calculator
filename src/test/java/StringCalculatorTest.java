@@ -7,16 +7,20 @@ import org.junit.Test;
 
 public class StringCalculatorTest {
 
-    private StringCalculator stringCalculator;
+    private StringCalculator stringCalculator = new StringCalculator();
     private String str;
     private long actual, expected;
 
     @Before
     public void getNewInstance() {
-        stringCalculator = new StringCalculator();
         str = "";
         expected = 0;
         actual = 0;
+    }
+
+    @Test
+    public void intitalAddCountValue() {
+        System.out.println(StringCalculator.addCallCount);
     }
 
     //  Feature - 1
@@ -50,7 +54,7 @@ public class StringCalculatorTest {
 
     //  Feature - 2
     @Test(expected = InputException.class)
-    public void unknownAmountOfNumber() {
+    public void shouldHandleUnknownAmountOfNumber() {
         str = "1,2,3,4";
         stringCalculator.Add(str);
     }
@@ -130,6 +134,7 @@ public class StringCalculatorTest {
             expect = StringCalculator.NEG_NA + " " + stringCalculator.negativeList.toString();
             assertEquals(expect, nne.getMessage());
             System.out.println(expect);
+            stringCalculator.negativeList.clear();
         }
 
         //  2
@@ -141,7 +146,17 @@ public class StringCalculatorTest {
             expect = StringCalculator.NEG_NA + " " + stringCalculator.negativeList.toString();
             assertEquals(expect, nne.getMessage());
             System.out.println(expect);
+            stringCalculator.negativeList.clear();
         }
+    }
 
+
+    //  Feature - 7
+    @Test
+    public void getCalledCount() {
+        expected = StringCalculator.addCallCount;
+        actual = stringCalculator.GetCalledCount();
+        assertEquals(expected, actual);
+        System.out.println(String.format("Expect: %x, Actual: %x", expected, actual));
     }
 }

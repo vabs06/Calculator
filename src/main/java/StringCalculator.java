@@ -3,8 +3,9 @@ import exception.NegativeNumberException;
 
 import java.util.ArrayList;
 
-
 public class StringCalculator {
+    public static int addCallCount = 0;
+
     public static final String delimit = ",";
     public static final String newLine = "\n";
     public static final String INVALID = "INVALID Input.";
@@ -14,11 +15,13 @@ public class StringCalculator {
     ArrayList<Integer> negativeList;
 
     public StringCalculator() {
+//        addCallCount = 0;
         negativeList = new ArrayList<>();
     }
 
 
     public int Add(String numbers) {
+        addCallCount++;
         int result = 0;
 
         if (numbers.length() == 0) {
@@ -100,7 +103,7 @@ public class StringCalculator {
         return result;
     }
 
-    public static void main(String[] args) {
-
+    public int GetCalledCount() {
+        return addCallCount;
     }
 }
